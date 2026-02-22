@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Запрошення на весілля</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400&family=Playfair+Display:italic&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --olive: #6b705c;
+            --beige: #f4f1ea;
+            --dark: #333;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--beige);
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Анимация появления */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Первый экран - Обложка */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), 
+                        url('photo.jpg') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4rem;
+            margin-bottom: 10px;
+        }
+
+        /* Печать как в видео */
+        .seal-container {
+            margin: 30px 0;
+            position: relative;
+        }
+        .seal {
+            width: 100px;
+            height: 100px;
+            background: #b5838d;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            border: 2px solid #a6757f;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .seal:hover { transform: scale(1.1); }
+
+        /* Секция с музыкой */
+        .music-section {
+            padding: 40px 20px;
+            background: #fff;
+            text-align: center;
+        }
+        .player {
+            max-width: 350px;
+            margin: 0 auto;
+            border: 1px solid #eee;
+            padding: 20px;
+            border-radius: 20px;
+        }
+
+        /* Календарь */
+        .calendar-card {
+            background: white;
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 320px;
+            border: 1px solid #d4a373;
+            position: relative;
+        }
+        .calendar-card h2 { font-family: 'Playfair Display', serif; }
+        .heart-date {
+            color: #b5838d;
+            font-size: 1.5rem;
+        }
+
+        /* Таймер */
+        .timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        .timer-item div { font-size: 1.2rem; font-weight: bold; }
+        .timer-item span { font-size: 0.7rem; color: #777; }
+
+        /* Кнопки */
+        .btn {
+            background: var(--olive);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            border: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        section { padding: 60px 20px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <h1 class="fade-in">Victor & Margo</h1>
+        <div class="seal-container fade-in">
+            <div class="seal">відкрити<br>запрошення</div>
+        </div>
+        <p class="fade-in" style="letter-spacing: 4px;">18.08.2026</p>
+    </div>
+
+    <section class="music-section fade-in">
+        <div class="player"><p style="font-family: 'Playfair Display'; font-style: italic;">Ми одружуємось!</p>
+            <p style="font-size: 0.8rem; color: #888;">Вмикайте музику для атмосфери</p>
+            <audio id="bg-music" controls style="width: 100%; margin-top: 10px;">
+                <source src="music.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+    </section>
+
+    <section class="fade-in">
+        <h2 style="font-family: 'Playfair Display';">Дорогі рідні та друзі!</h2>
+        <p style="max-width: 500px; margin: 0 auto; line-height: 1.6;">
+            Незабаром у нашому житті відбудеться важлива подія — наше весілля! 
+            Ми віримо, що цей день стане початком довгого та щасливого життя.
+        </p>
+        
+        <div class="calendar-card">
+            <h3>Травень 2026</h3>
+            <p>Пн Вт Ср Чт Пт Сб Вс</p>
+            <hr>
+            <p>... 11 12 13 14 <span class="heart-date">❤</span> 16 17</p>
+        </div>
+    </section>
+
+    <section style="background-color: var(--olive); color: white;" class="fade-in">
+        <h2>Локація</h2>
+        <p>Ресторан «Porto Franco»<br>Одеса, вул. Рішельєвська, 9А</p>
+        <a href="https://maps.google.com" target="_blank" class="btn" style="background: white; color: var(--olive);">ПЕРЕГЛЯНУТИ НА МАПІ</a>
+    </section>
+
+    <section class="fade-in">
+        <h2>Ми скажемо «Так» через...</h2>
+        <div class="timer">
+            <div class="timer-item"><div>285</div><span>Днів</span></div>
+            <div class="timer-item"><div>19</div><span>Годин</span></div>
+            <div class="timer-item"><div>15</div><span>Хвилин</span></div>
+        </div>
+        <button class="btn">ПІДТВЕРДИТИ ПРИСУТНІСТЬ</button>
+    </section>
+
+    <script>
+        // Скрипт для появления элементов при скролле
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
