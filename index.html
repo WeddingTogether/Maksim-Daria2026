@@ -3,192 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Запрошення на весілля</title>
+    <title>Запрошення: Максим та Дарья</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400&family=Playfair+Display:italic&display=swap" rel="stylesheet">
     <style>
         :root {
             --olive: #6b705c;
             --beige: #f4f1ea;
-            --dark: #333;
-            --wax: #b5838d; /* Цвет печати */
+            --wax: #b5838d;
         }
 
-        body {
-            margin: 0;
-            background-color: var(--beige);
-            font-family: 'Montserrat', sans-serif;
-            overflow-x: hidden;
-        }
+        body { margin: 0; background: var(--beige); font-family: 'Montserrat', sans-serif; }
 
-        /* --- АНИМАЦИЯ КОНВЕРТА --- */
-        .envelope-wrapper {
+        /* Контейнер для центрирования конверта */
+        .wrapper {
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: var(--olive);
-            perspective: 1000px;
-            transition: opacity 1s ease;
+            background-color: #585d4a; /* Более глубокий оливковый для фона */
+            overflow: hidden;
+            position: relative;
+            z-index: 100;
+            transition: transform 1s ease-in-out;
         }
 
         .envelope {
             position: relative;
             width: 300px;
             height: 200px;
-            background: #a4ac86; /* Цвет самого конверта */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: #a4ac86;
             cursor: pointer;
         }
 
-        /* Клапан конверта */
-        .envelope::before {
+        /* Нижняя часть конверта (передний план) */
+        .envelope::after {
             content: "";
             position: absolute;
-            top: 0;
-            z-index: 2;
-            border-top: 110px solid #8b9467;
+            z-index: 3;
             border-left: 150px solid transparent;
             border-right: 150px solid transparent;
+            border-bottom: 100px solid #8b9467;
+            bottom: 0;
+        }
+
+        /* Боковые части */
+        .envelope-sides::before {
+            content: "";
+            position: absolute;
+            z-index: 2;
+            border-top: 100px solid transparent;
+            border-bottom: 100px solid transparent;
+            border-left: 150px solid #9ba37a;
+            top: 0; left: 0;
+        }
+
+        /* Клапан (крышка) */
+        .flap {
+            position: absolute;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 110px solid #7d855c;
             transform-origin: top;
-            transition: transform 0.6s ease-in-out;
+            transition: transform 0.6s 0.4s ease;
+            z-index: 4;
         }
 
         /* Печать */
         .seal {
             position: absolute;
-            top: 90px;
+            top: 85px;
             left: 125px;
             width: 50px;
             height: 50px;
             background: var(--wax);
             border-radius: 50%;
-            z-index: 3;
+            z-index: 5;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 8px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-            transition: opacity 0.4s;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: 0.4s;
         }
 
-        /* Письмо внутри */
+        /* Само письмо */
         .letter {
             position: absolute;
-            bottom: 0;
-            left: 10px;
-            width: 280px;
+            bottom: 5px;
+            left: 15px;
+            width: 270px;
             height: 180px;
             background: white;
             z-index: 1;
-            transition: transform 0.8s ease-in-out;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            transition: transform 0.8s 1s ease;
             text-align: center;
-            padding: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
 
-        .letter h2 { font-family: 'Great Vibes', cursive; margin: 0; color: var(--dark); }
+        .letter h2 { font-family: 'Great Vibes', cursive; margin: 10px 0; font-size: 1.8rem; }
 
-        /* Состояние при открытии */
-        .envelope.open::before {
-            transform: rotateX(180deg);
-            z-index: 0;
-        }
-        .envelope.open .seal {
-            opacity: 0;
-            pointer-events: none;
-        }
-        .envelope.open .letter {
-            transform: translateY(-120px);
-            height: 350px;
-        }
+        /* АНИМАЦИЯ ПРИ КЛИКЕ */
+        .envelope.open .flap { transform: rotateX(180deg); z-index: 0; }
+        .envelope.open .seal { opacity: 0; transform: scale(0); }
+        .envelope.open .letter { transform: translateY(-130px); height: 250px; }
 
-        /* Основной контент (скрыт изначально) */
-        #main-content {
-            display: none;
-            animation: fadeIn 2s ease forwards;
-        }
+        /* Исчезновение интро */
+        .wrapper.hide { transform: translateY(-100%); }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Стили из прошлого дизайна */
-        .hero {
-            height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('photo.jpg') center/cover no-repeat;
+        /* Основной контент (скрыт до открытия) */
+        #main-site { display: none; padding-bottom: 50px; }
+        .hero { 
+            height: 80vh; 
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('photo.jpg') center/cover;
             display: flex; flex-direction: column; justify-content: center; align-items: center; color: white;
         }
-        .hero h1 { font-family: 'Great Vibes', cursive; font-size: 4.5rem; margin: 0; }
-        .calendar-card { background: white; padding: 30px; margin: 40px auto; max-width: 320px; border: 1px solid var(--olive); text-align: center; }
-        .btn { background: var(--olive); color: white; padding: 15px 40px; border-radius: 30px; text-decoration: none; display: inline-block; margin-top: 20px; border: none; cursor: pointer; }
-        section { padding: 80px 20px; text-align: center; }
     </style>
 </head>
-<body>
-
-    <div class="envelope-wrapper" id="intro">
-        <div class="envelope" onclick="openEnvelope()">
-            <div class="seal">ВІДКРИТИ</div>
+<body><div class="wrapper" id="intro">
+        <div class="envelope" id="env" onclick="startAnimation()">
+            <div class="flap"></div>
+            <div class="envelope-sides"></div>
+            <div class="seal">OPEN</div>
             <div class="letter">
-                <h2>Максим та Дарья</h2>
-                <p style="font-size: 12px;">06.06.2026</p>
+                <h2>Максим <br>& Дарья</h2>
+                <p>06.06.2026</p>
             </div>
         </div>
     </div>
 
-    <div id="main-content">
+    <div id="main-site">
         <div class="hero">
-            <h1>Максим та Дарья</h1>
-            <p style="letter-spacing: 5px; font-size: 1.2rem;">06.06.2026</p>
+            <h1 style="font-family: 'Great Vibes'; font-size: 4rem;">Максим та Дарья</h1>
+            <p style="letter-spacing: 5px;">06.06.2026</p>
         </div>
-
-        <section>
-            <div style="max-width: 350px; margin: 0 auto; border: 1px solid #ddd; padding: 20px; border-radius: 20px; background: white;">
-                <p style="font-family: 'Playfair Display'; font-style: italic;">Ми одружуємось!</p>
-                <audio controls style="width: 100%;">
-                    <source src="music.mp3" type="audio/mpeg">
-                </audio>
-            </div>
-        </section>
-
-        <section>
-            <h2 style="font-family: 'Playfair Display';">Дорогі рідні та друзі!</h2>
-            <p>Запрошуємо вас розділити з нами цей особливий день.</p>
-            <div class="calendar-card">
-                <h3>Червень 2026</h3>
-                <p>Пн Вт Ср Чт Пт Сб Вс</p>
-                <hr>
-                <p>1 2 3 4 5 <span style="color:var(--wax); font-size: 20px;">❤</span> 7</p>
-            </div>
-        </section>
-
-        <section style="background: var(--olive); color: white;">
-            <h2>Локація</h2>
-            <p>Ресторан «Porto Franco»<br>Одеса, вул. Рішельєвська, 9А</p>
-            <a href="#" class="btn" style="background: white; color: var(--olive);">МАПА</a>
-        </section>
+        
+        <section style="text-align: center; padding: 50px 20px;">
+            <h2 style="font-family: 'Playfair Display';">Дорогі гості!</h2>
+            <p>Будемо раді бачити вас на нашому святі!</p>
+            </section>
     </div>
 
     <script>
-        function openEnvelope() {
-            const env = document.querySelector('.envelope');
+        function startAnimation() {
+            const env = document.getElementById('env');
+            const intro = document.getElementById('intro');
+            const main = document.getElementById('main-site');
+
+            // 1. Открываем конверт
             env.classList.add('open');
-            
-            // Ждем завершения анимации и показываем основной сайт
+
+            // 2. Через 2.5 секунды убираем конверт и показываем сайт
             setTimeout(() => {
-                document.getElementById('intro').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('intro').style.display = 'none';
-                    document.getElementById('main-content').style.display = 'block';
-                    window.scrollTo(0, 0);
-                }, 1000);
-            }, 1500);
+                intro.classList.add('hide');
+                main.style.display = 'block';
+            }, 2500);
         }
     </script>
 </body>
