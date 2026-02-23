@@ -3,195 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Victor & Margo Wedding</title>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
-    
+    <title>Wedding Invitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400&family=Cormorant+Garamond:wght@400&display=swap" rel="stylesheet">
     <style>
         :root {
             --olive: #6b705c;
-            --clay: #a67c52;
-            --ivory: #f4f1ea;
+            --paper: #f4f1ea;
+            --wax: #a67c52;
         }
 
-        body, html { margin: 0; padding: 0; height: 100%; background: var(--ivory); font-family: 'Cormorant Garamond', serif; overflow-x: hidden; }
+        body { margin: 0; background: #dcd7cc; font-family: 'Cormorant Garamond', serif; overflow-x: hidden; }
 
-        /* --- ЭКРАН ПЕЧАТИ (КОНВЕРТ) --- */
-        #envelope-wrapper {
+        /* КОНВЕРТ */
+        .envelope-wrapper {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--olive);
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            z-index: 9999;
-            transition: all 1.2s cubic-bezier(0.7, 0, 0.3, 1);
-            color: white;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 1000;
+            background: #b8bba9; /* Фон за конвертом */
+            transition: opacity 0.8s ease 1s, visibility 0.8s ease 1s;
         }
 
-        /* Анимация исчезновения при открытии */
-        .envelope-opened {
-            opacity: 0;
-            visibility: hidden;
-            transform: scale(1.2); /* Эффект приближения перед исчезновением */
-        }
-
-        .names-hero {
-            font-family: 'Great Vibes', cursive;
-            font-size: 3.5rem;
-            margin-bottom: 30px;
-            opacity: 0;
-            animation: fadeInDown 1.5s forwards 0.5s;
-        }
-
-        /* САМА ПЕЧАТЬ */
-        .seal-container {
+        .envelope {
             position: relative;
-            width: 140px; height: 140px;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: transform 0.3s;
-        }
-
-        .seal-container:hover { transform: scale(1.05); }
-
-        /* Стилизация сургуча с текстурой */
-        .wax-seal-graphic {
-            position: absolute;
             width: 100%; height: 100%;
-            background: var(--clay);
-            border-radius: 55% 45% 52% 48% / 47% 53% 46% 54%; /* Неровные края как у воска */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4), inset 0 0 15px rgba(0,0,0,0.2);
+            background: var(--olive);
+            overflow: hidden;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+
+        /* Верхний клапан (треугольник) */
+        .top-fold {
+            position: absolute; top: 0; width: 0; height: 0;
+            border-left: 50vw solid transparent;
+            border-right: 50vw solid transparent;
+            border-top: 45vh solid #5b604c; /* Чуть темнее основного */
+            z-index: 5;
+            transition: transform 1s ease;
+            transform-origin: top;
+        }
+
+        /* Текст на конверте */
+        .envelope-text {
+            color: white; text-align: center; z-index: 6;
+            transition: opacity 0.5s ease;
+        }
+        .envelope-text h1 { font-family: 'Great Vibes'; font-size: 3.5rem; margin: 0; }
+        .envelope-text p { font-family: 'Montserrat'; letter-spacing: 5px; }
+
+        /* ПЕЧАТЬ */
+        .wax-seal {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 110px; height: 110px;
+            background: var(--wax);
+            border-radius: 48% 52% 45% 55% / 53% 47% 56% 44%; /* Органическая форма */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3), inset 0 0 10px rgba(0,0,0,0.2);
+            z-index: 10; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
-            animation: sealPulse 2s infinite;
+            transition: all 0.6s cubic-bezier(0.5, 0, 0.5, 1);
+        }
+        .wax-seal:hover { transform: translate(-50%, -50%) scale(1.05); }
+        .wax-seal span {
+            color: white; font-family: 'Montserrat'; font-size: 9px;
+            text-transform: uppercase; text-align: center; letter-spacing: 1px;
         }
 
-        .wax-seal-graphic span {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 10px;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: rgba(255,255,255,0.9);
-            line-height: 1.4;
-            pointer-events: none;
+        /* АНИМАЦИЯ ОТКРЫТИЯ */
+        .is-open .wax-seal { opacity: 0; transform: translate(-50%, -50%) scale(0.5); pointer-events: none; }
+        .is-open .top-fold { transform: rotateX(180deg); z-index: 1; }
+        .is-open .envelope-text { opacity: 0; }
+        .is-open.envelope-wrapper { opacity: 0; visibility: hidden; }
+
+        /* ОСНОВНОЙ КОНТЕНТ (ЛИСТ ПРИГЛАШЕНИЯ) */
+        .invitation-card {
+            max-width: 500px; margin: 0 auto; padding: 40px 20px;
+            background: var(--paper); min-height: 100vh;
+            text-align: center; box-shadow: 0 0 50px rgba(0,0,0,0.1);
         }
-
-        .envelope-date {
-            margin-top: 40px;
-            font-family: 'Montserrat', sans-serif;
-            letter-spacing: 5px;
-            font-weight: 300;
-            opacity: 0;
-            animation: fadeInUp 1.5s forwards 0.5s;
-        }
-
-        /* АНИМАЦИИ */
-        @keyframes sealPulse {
-            0% { transform: scale(1); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-            50% { transform: scale(1.03); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
-            100% { transform: scale(1); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- ОСНОВНОЙ КОНТЕНТ (СКРЫТ ПО УМОЛЧАНИЮ) --- */
-        .main-page {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            text-align: center;
-            opacity: 0;
-            transition: opacity 1s ease 0.5s;
-        }
-
-        .show-content { opacity: 1; }
-
-        .location-section {
-            background: white;
-            margin: 30px 0;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);}
-
-        .btn-map {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 12px 25px;
-            border: 1px solid var(--olive);
-            color: var(--olive);
-            text-decoration: none;
-            border-radius: 25px;
-            font-size: 13px;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .swatch-group {
-            display: flex; justify-content: center; gap: 12px; margin: 20px 0;
-        }
-
-        .swatch {
-            width: 50px; height: 50px; border-radius: 50%; border: 3px solid white; box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        
+        .section { padding: 30px 0; border-bottom: 1px solid #ddd; }
+        .swatch-group { display: flex; justify-content: center; gap: 10px; margin: 20px 0; }
+        .swatch { width: 45px; height: 45px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        
+        .map-btn {
+            display: inline-block; padding: 10px 25px; border: 1px solid var(--olive);
+            color: var(--olive); text-decoration: none; border-radius: 20px;
+            font-family: 'Montserrat'; font-size: 12px; margin-top: 15px;
         }
     </style>
 </head>
 <body>
 
-    <div id="envelope-wrapper" onclick="openInvitation()">
-        <div class="names-hero">Victor & Margo</div>
-        
-        <div class="seal-container">
-            <div class="wax-seal-graphic">
+    <div class="envelope-wrapper" id="wrapper"><div class="envelope" id="envelope">
+            <div class="top-fold"></div>
+            
+            <div class="envelope-text">
+                <h1>Victor & Margo</h1>
+                <p>18.08.2026</p>
+            </div>
+
+            <div class="wax-seal" onclick="openInvitation()">
                 <span>відкрити<br>запрошення</span>
             </div>
         </div>
-
-        <div class="envelope-date">18.08.2026</div>
     </div>
 
-    <div id="main-content" class="main-page">
+    <div class="invitation-card">
         <h2 style="font-family: 'Great Vibes'; font-size: 3rem; color: var(--olive);">Запрошення</h2>
-        <p>Ми будемо раді бачити вас на нашому святі!</p>
+        <p>Дорогі друзі! Будемо раді бачити вас!</p>
 
-        <div class="location-section">
-            <h3 style="font-family: 'Montserrat'; font-weight: 400;">Локація</h3>
-            <p>Ресторан «Porto Franco»</p>
-            <p style="font-size: 14px; color: #666;">вул. Рішельєвська, 9А, Одеса</p>
-            <a href="https://maps.google.com" target="_blank" class="btn-map">ПЕРЕГЛЯНУТИ НА МАПІ</a>
+        <div class="section">
+            <h3 style="font-family: 'Montserrat'; font-weight: 300; text-transform: uppercase;">Локація</h3>
+            <p><strong>Ресторан «Porto Franco»</strong></p>
+            <p>Одеса, вул. Рішельєвська, 9А</p>
+            <a href="#" class="map-btn">ПЕРЕГЛЯНУТИ НА МАПІ</a>
         </div>
 
-        <h3>Дрес-код</h3>
-        <div class="swatch-group">
-            <div class="swatch" style="background: #e6e2d3;"></div>
-            <div class="swatch" style="background: #d4ccb6;"></div>
-            <div class="swatch" style="background: #a3ad91;"></div>
-            <div class="swatch" style="background: #6b705c;"></div>
+        <div class="section">
+            <h3 style="font-family: 'Montserrat'; font-weight: 300; text-transform: uppercase;">Дрес-код</h3>
+            <div class="swatch-group">
+                <div class="swatch" style="background: #e6e2d3;"></div>
+                <div class="swatch" style="background: #d4ccb6;"></div>
+                <div class="swatch" style="background: #a3ad91;"></div>
+                <div class="swatch" style="background: #6b705c;"></div>
+            </div>
         </div>
-
-        <p style="margin-top: 50px; font-size: 12px; letter-spacing: 2px;">ЧЕКАЄМО НА ВАС!</p>
     </div>
 
     <script>
         function openInvitation() {
-            // Анимация конверта
-            const envelope = document.getElementById('envelope-wrapper');
-            envelope.classList.add('envelope-opened');
+            // Запускаем анимацию на конверте
+            document.getElementById('wrapper').classList.add('is-open');
             
-            // Плавное появление контента
-            const content = document.getElementById('main-content');
-            content.classList.add('show-content');
-
-            // Чтобы скролл появился только после открытия
-            document.body.style.overflowY = "auto";
+            // Разрешаем скролл основного контента через секунду
+            setTimeout(() => {
+                document.body.style.overflowY = "auto";
+            }, 1500);
         }
-
-        // Блокируем скролл пока не нажали на печать
         document.body.style.overflowY = "hidden";
     </script>
 </body>
