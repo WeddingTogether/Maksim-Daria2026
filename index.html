@@ -1,193 +1,180 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Запрошення: Максим та Дарья</title>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400&family=Playfair+Display:italic&display=swap" rel="stylesheet">
+    <title>Приглашение на свадьбу | Victor & Margo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500&family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-env: #8b9467; /* Тот самый оливковый */
-            --bg-body: #f4f1ea;
-            --wax: #b5838d;
+            --bg-color: #f4f1ea;
+            --accent-green: #6b705c;
+            --text-color: #333;
         }
 
-        body { margin: 0; background: var(--bg-body); font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
-
-        /* Контейнер для анимации */
-        .wrapper {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #585d4a; 
-            position: fixed;
-            width: 100%;
-            z-index: 9999;
-            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .envelope-container {
-            position: relative;
-            width: 320px;
-            height: 220px;
-            cursor: pointer;
-        }
-
-        /* Задняя стенка */
-        .envelope {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-env);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-        }
-
-        /* Клапан (крышка) */
-        .flap {
-            position: absolute;
-            top: 0;
-            width: 0;
-            height: 0;
-            border-left: 160px solid transparent;
-            border-right: 160px solid transparent;
-            border-top: 120px solid #7a8258;
-            transform-origin: top;
-            transition: transform 0.6s ease;
-            z-index: 4;
-        }
-
-        /* Передние стенки (кармашек) */
-        .envelope::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            z-index: 3;
-            border-left: 160px solid transparent;
-            border-right: 160px solid transparent;
-            border-bottom: 110px solid #9ba37a;
-        }
-
-        .envelope::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            z-index: 2;
-            border-top: 110px solid transparent;
-            border-bottom: 110px solid transparent;
-            border-left: 160px solid #a4ac86;
-        }
-
-        /* Печать */
-        .seal {
-            position: absolute;
-            top: 95px;
-            left: 135px;
-            width: 50px;
-            height: 50px;
-            background: var(--wax);
-            border-radius: 50%;
-            z-index: 5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 8px;
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transition: 0.4s ease;
         }
 
-        /* Письмо (которое выезжает) */
-        .card {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            width: 300px;
-            height: 200px;
-            background: #fff;
-            z-index: 1;
-            transition: transform 1s 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        h1, h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+        }
+
+        /* 1. Header Section */
+        .hero {
+            padding: 100px 20px;
+            background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('https://via.placeholder.com/800x1200') center/cover;
+            color: white;
+            height: 80vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            padding: 20px;
-            box-sizing: border-box;
-            text-align: center;
         }
 
-        .card h2 { font-family: 'Great Vibes', cursive; color: #333; font-size: 2rem; margin: 0; }
-        .card p { font-size: 14px; margin-top: 10px; letter-spacing: 2px; }
+        .hero h1 { font-size: 3rem; margin-bottom: 10px; }
+        .hero p { font-size: 1.2rem; letter-spacing: 2px; }
 
-        /* ЭФФЕКТЫ ПРИ КЛИКЕ */
-        .open .flap { transform: rotateX(180deg); z-index: 0; }
-        .open .seal { opacity: 0; transform: scale(0); }
-        .open .card { transform: translateY(-150px); height: 300px; }
+        /* 2. Music Player Block */
+        .player-block {
+            padding: 40px 20px;
+            background: white;
+            margin: 20px auto;
+            max-width: 400px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
 
-        .wrapper.fade-out { transform: translateY(-100%); }
+        /* 3. Dress Code Palette */
+        .palette {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
 
-        /* КОНТЕНТ САЙТА */
-        #main-site { opacity: 0; transition: opacity 1s 1s; padding-bottom: 50px; }#main-site.show { opacity: 1; }
+        .color-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+        }
 
-        .hero { 
-            height: 100vh; 
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('photo.jpg') center/cover no-repeat;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; color: white;
+        /* 4. RSVP Form */
+        .rsvp-form {
+            background-color: var(--accent-green);
+            color: white;
+            padding: 60px 20px;
+        }
+
+        input, select, button {
+            display: block;
+            width: 80%;
+            max-width: 300px;
+            margin: 15px auto;
+            padding: 12px;
+            border-radius: 25px;
+            border: none;
+        }
+
+        button {
+            background-color: white;
+            color: var(--accent-green);
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        /* Таймер */
+        #timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 1.5rem;
+            margin: 30px 0;
         }
     </style>
 </head>
 <body>
 
-    <div class="wrapper" id="intro">
-        <div class="envelope-container" onclick="openEnvelope()">
-            <div class="flap"></div>
-            <div class="seal">ВІДКРИТИ</div>
-            <div class="envelope"></div>
-            <div class="card">
-                <h2>Максим <br>& Дарья</h2>
-                <p>06.06.2026</p>
-            </div>
-        </div>
-    </div>
+    <section class="hero">
+        <h1>Victor & Margo</h1>
+        <p>18.08.2026</p>
+    </section>
 
-    <div id="main-site">
-        <div class="hero">
-            <h1 style="font-family: 'Great Vibes'; font-size: 4.5rem;">Максим та Дарья</h1>
-            <p style="letter-spacing: 5px;">06.06.2026</p>
+    <section class="player-block">
+        <h2>Ми одружуємося!</h2>
+        <p>Вмикайте музику для атмосфери</p>
+        <audio controls style="width: 100%;">
+            <source src="your-audio-file.mp3" type="audio/mpeg">
+        </audio>
+    </section>
+
+    <section style="padding: 50px 20px;">
+        <h2>Програма дня</h2>
+        <div style="border-left: 1px solid #ccc; width: 1px; height: 100px; margin: 20px auto;"></div>
+        <p>15:30 — Збір гостей</p>
+        <p>16:00 — Церемонія</p>
+        <p>16:30 — Банкет</p>
+    </section>
+
+    <section style="padding: 50px 20px; background: #fff;">
+        <h2>Дрес-код</h2>
+        <p>Будемо вдячні, якщо ви підтримаєте колірну гаму нашого свята:</p>
+        <div class="palette">
+            <div class="color-circle" style="background-color: #e6e2d3;"></div>
+            <div class="color-circle" style="background-color: #d4ccb6;"></div>
+            <div class="color-circle" style="background-color: #a3ad91;"></div>
+            <div class="color-circle" style="background-color: #6b705c;"></div>
         </div>
-        
-        <section style="text-align: center; padding: 60px 20px;">
-            <p style="font-family: 'Playfair Display'; font-style: italic; font-size: 1.5rem;">Ми одружуємось!</p>
-            <audio controls id="audio" style="width: 100%; max-width: 300px; margin: 20px 0;">
-                <source src="music.mp3" type="audio/mpeg">
-            </audio>
-            
-            <div style="max-width: 500px; margin: 0 auto; line-height: 1.8;">
-                <h2 style="font-family: 'Playfair Display';">Дорогі рідні та друзі!</h2>
-                <p>Цей день буде особливим для нас, і ми хочемо провести його разом з вами.</p>
-            </div>
-        </section>
-    </div>
+    </section>
+
+    <section>
+        <h2>Ми скажемо «Так» через:</h2><div id="timer">
+            <div><span id="days">00</span><br><small>Днів</small></div>
+            <div><span id="hours">00</span><br><small>Год</small></div>
+            <div><span id="mins">00</span><br><small>Хв</small></div>
+        </div>
+    </section>
+
+    <section class="rsvp-form">
+        <h2>Анкета Гостя</h2>
+        <form>
+            <input type="text" placeholder="Ваше ім'я та прізвище" required>
+            <select>
+                <option value="yes">Так, із задоволенням!</option>
+                <option value="no">На жаль, не зможу</option>
+            </select>
+            <button type="submit">ВІДПРАВИТИ</button>
+        </form>
+    </section>
 
     <script>
-        function openEnvelope() {
-            const container = document.querySelector('.envelope-container');
-            const intro = document.getElementById('intro');
-            const main = document.getElementById('main-site');
-            const audio = document.getElementById('audio');
+        // Простой скрипт для таймера
+        const countDownDate = new Date("Aug 18, 2026 16:00:00").getTime();
 
-            // 1. Анимация раскрытия
-            container.classList.add('open');
+        setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
 
-            // 2. Через 3 секунды улетаем вверх
-            setTimeout(() => {
-                intro.classList.add('fade-out');
-                main.classList.add('show');
-                // Автовоспроизведение музыки (если браузер позволит)
-                audio.play();
-            }, 3000);
-        }
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+            document.getElementById("days").innerHTML = days;
+            document.getElementById("hours").innerHTML = hours;
+            document.getElementById("mins").innerHTML = minutes;
+        }, 1000);
     </script>
+
 </body>
 </html>
