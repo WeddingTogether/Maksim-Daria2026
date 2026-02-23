@@ -176,4 +176,58 @@
             </div>
         </section>
 
+        <section class="section"><h3>Dress Code</h3>
+            <p>Будемо вдячні за підтримку кольорової гами нашого весілля:</p>
+            <div class="swatch-group">
+                <div class="swatch" style="background: #fdfaf5;"></div>
+                <div class="swatch" style="background: #eee4d9;"></div>
+                <div class="swatch" style="background: #d7ccc8;"></div>
+                <div class="swatch" style="background: #bda27e;"></div>
+                <div class="swatch" style="background: #8d8071;"></div>
+            </div>
+        </section>
+
         <section class="section">
+            <h3>Локація</h3>
+            <p><strong>Ресторан вашого міста</strong><br>Вулиця та номер будинку</p>
+            <a href="#" class="map-btn">ВІДКРИТИ КАРТУ</a>
+        </section>
+
+        <section class="section rsvp-form">
+            <h3>Анкета гостя</h3>
+            <p style="font-size: 0.9rem; margin-bottom: 20px;">Будь ласка, підтвердіть вашу присутність до 01.05.2026</p>
+            <form>
+                <input type="text" placeholder="Ваше ім'я та прізвище" required>
+                <select required>
+                    <option value="" disabled selected>Чи зможете ви прийти?</option>
+                    <option value="yes">Так, із задоволенням!</option>
+                    <option value="no">На жаль, не зможу</option>
+                </select>
+                <button type="button">ПІДТВЕРДИТИ</button>
+            </form>
+        </section>
+
+        <p style="margin-top: 40px; font-size: 1.1rem; font-style: italic;">Чекаємо на вас!</p>
+    </div>
+
+    <script>
+        function openInvitation() {
+            document.getElementById('wrapper').classList.add('is-open');
+            document.body.style.overflowY = "auto";
+        }
+
+        // Таймер на 06.06.2026
+        const weddingDate = new Date("Jun 06, 2026 15:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = weddingDate - now;
+            document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById('h').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById('m').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        }, 1000);
+        
+        document.body.style.overflowY = "hidden";
+    </script>
+</body>
+</html>
+
