@@ -211,23 +211,50 @@
     </div>
 
     <script>
-        function openInvitation() {
-            document.getElementById('wrapper').classList.add('is-open');
-            document.body.style.overflowY = "auto";
-        }
+    function openInvitation() {
+        const wrapper = document.getElementById('wrapper');
+        
+        // Добавляем класс анимации
+        wrapper.classList.add('is-open');
+        
+        // Убираем блокировку скролла
+        document.body.style.overflow = "visible";
+        document.documentElement.style.overflow = "visible";
+        
+        // Полностью удаляем конверт через 1.5 секунды, чтобы он не мешал нажимать на кнопки
+        setTimeout(() => {
+            wrapper.style.display = 'none';
+        }, 1500);
+    }
 
-        // Таймер на 06.06.2026
-        const weddingDate = new Date("Jun 06, 2026 15:00:00").getTime();
-        setInterval(() => {
-            const now = new Date().getTime();
-            const diff = weddingDate - now;
+    // Обработка клика и касания (для мобильных)
+    const seal = document.querySelector('.wax-seal');
+    seal.addEventListener('click', openInvitation);
+    seal.addEventListener('touchstart', function(e) {
+        e.preventDefault(); // Предотвращаем двойное срабатывание
+        openInvitation();
+    }, {passive: false});
+
+    // Таймер на 06.06.2026
+    const weddingDate = new Date("Jun 06, 2026 15:00:00").getTime();
+    function updateTimer() {
+        const now = new Date().getTime();
+        const diff = weddingDate - now;
+        
+        if (diff > 0) {
             document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
             document.getElementById('h').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             document.getElementById('m').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        }, 1000);
-        
-        document.body.style.overflowY = "hidden";
-    </script>
+        }
+    }
+    setInterval(updateTimer, 1000);
+    updateTimer();
+
+    // Начальная блокировка скролла
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+</script>
 </body>
 </html>
+
 
