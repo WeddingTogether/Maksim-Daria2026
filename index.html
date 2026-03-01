@@ -37,7 +37,7 @@
             transition: transform 1s ease; transform-origin: top;
         }
         .envelope-text {
-            position: absolute; top: 25%; text-align: center; z-index: 9; width: 100%; pointer-events: none;
+            position: absolute; top: 25%; text-align: center; z-index: 90; width: 100%; pointer-events: none;
         }
         .envelope-text h1 { font-family: 'Great Vibes'; font-size: clamp(2.5rem, 9vw, 4.2rem); margin: 0; color: var(--text-main); }
 
@@ -52,18 +52,18 @@
 
         .envelope-date {
             position: absolute; bottom: 15%; width: 100%; text-align: center;
-            z-index: 9; font-family: 'Montserrat'; letter-spacing: 5px; font-size: 1.1rem;
+            z-index: 90; font-family: 'Montserrat'; letter-spacing: 5px; font-size: 1.1rem;
         }
 
         .is-open .top-fold { transform: rotateX(180deg); }
-        .is-open-fade { opacity: 0; visibility: hidden; }
+        .is-open.envelope-wrapper { opacity: 0; visibility: hidden; }
 
         /* --- КОНТЕНТ --- */
         .invitation-card {
             max-width: 500px; margin: 0 auto; padding: 60px 20px; text-align: center;
-            display: none; /* Скрыто до открытия */
+            opacity: 0; transform: translateY(30px); transition: 1s ease 0.5s;
         }
-        body.opened .invitation-card { display: block; }
+        body.opened .invitation-card { opacity: 1; transform: translateY(0); }
 
         .section { padding: 45px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
         h2 { font-weight: 500; font-size: 2rem; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 3px; }
@@ -76,7 +76,7 @@
         .timer-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; }
 
         .calendar-container {
-            display: inline-block; padding: 20px; border: 1px solid var(--accent-gold); border-radius: 15px;
+            display: inline-block; padding: 20px; border: 1px solid var(--accent-gold); border-radius: 15px; position: relative;
         }
         .calendar-wrap { padding: 15px; background: white; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.02); }
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; font-family: 'Montserrat'; font-size: 0.9rem; }
@@ -89,14 +89,17 @@
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
-        .swatches-container { display: flex; justify-content: center; flex-wrap: wrap; margin-top: 30px; gap: 12px; }
+        .swatches-container { display: flex; justify-content: center; flex-wrap: wrap; margin-top: 30px; gap: 12px; min-height: 80px; }
         .swatch {
             width: 65px; height: 65px; border-radius: 50%;
             border: 4px solid white; box-shadow: 2px 5px 15px rgba(0,0,0,0.1);
+            opacity: 0; transform: translateY(20px); 
+            transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             background-image: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.3) 0%, transparent 75%);
         }
+        .swatch.visible { opacity: 1; transform: translateY(0); }
 
-        .loc-img { width: 100%; height: 230px; border-radius: 20px; background-size: cover; background-position: center; margin-bottom: 15px; background-color: #eee; }
+        .loc-img { width: 100%; height: 230px; border-radius: 20px; background-size: cover; background-position: center; margin-bottom: 15px; background-color: #eee; border: 1px solid #ddd; }
         .map-btn { display: inline-block; padding: 12px 35px; border: 1.5px solid var(--accent-gold); color: var(--accent-gold); text-decoration: none; border-radius: 30px; font-size: 10px; letter-spacing: 2px; font-weight: 600; text-transform: uppercase; }
 
         .rsvp-form { background: #f3ece4; padding: 40px 25px; border-radius: 25px; }
@@ -110,10 +113,10 @@
         }
     </style>
 </head>
-<body onload="window.scrollTo(0,0)">
+<body onload="init()">
 
     <div class="envelope-wrapper" id="wrapper">
-        <div class="envelope" id="env">
+        <div class="envelope">
             <div class="top-fold"></div>
             <div class="envelope-text"><h1>Максим та Дар’я</h1></div>
             <div class="wax-seal" onclick="openInvitation()"><span>відкрити</span></div>
@@ -121,7 +124,7 @@
         </div>
     </div>
 
-    <div class="invitation-card" id="card">
+    <div class="invitation-card">
         <section class="section">
             <h2>Особливий День</h2>
             <p class="special-text">Дорогі друзі!</p>
@@ -155,14 +158,16 @@
 
         <section class="section">
             <h3 style="font-family: 'Great Vibes'; font-size: 3rem; color: var(--accent-gold);">Дрес-код</h3>
-            <p style="padding: 0 15px; line-height: 1.5;">Ми будемо вдячні, якщо ви підтримаєте атмосферу свята та оберете наряди у таких кольорах:</p>
-            <div class="swatches-container">
+            <p style="padding: 0 15px; line-height: 1.5;">Ми будемо дуже вдячні, якщо ви підтримаєте атмосферу свята та оберете ваші наряди у таких кольорах:</p>
+            <div class="swatches-container" id="swatches">
                 <div class="swatch" style="background-color: #fce4ec;"></div> 
                 <div class="swatch" style="background-color: #e1bee7;"></div> 
                 <div class="swatch" style="background-color: #d4a5a5;"></div> 
                 <div class="swatch" style="background-color: #f5ebe0;"></div> 
                 <div class="swatch" style="background-color: #eeddcc;"></div> 
                 <div class="swatch" style="background-color: #fdf5e6;"></div> 
+                <div class="swatch" style="background-color: #d7c0ae;"></div> 
+                <div class="swatch" style="background-color: #b0bec5;"></div> 
             </div>
         </section>
 
@@ -171,14 +176,14 @@
                 <h3>Офіційна частина</h3>
                 <div class="loc-img" style="background-image: url('zags.jpg');"></div>
                 <p><strong>Одеський ВРАЦС</strong><br>вул. Ришельєвська 4, Одеса<br><strong>Початок о 13:30</strong></p>
-                <a href="https://www.google.com/maps/search/?api=1&query=Одеський+ВРАЦС+Ришельєвська+4" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Одеський+ВРАЦС+Ришельєвська+4+Одеса" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
             </div>
 
             <div class="loc-card" style="margin-top: 40px;">
                 <h3>Банкет</h3>
                 <div class="loc-img" style="background-image: url('restaurant.jpg');"></div>
                 <p><strong>Ресторан</strong><br>Ванний провулок 3, Одеса<br><strong>Початок о 16:00</strong></p>
-                <a href="https://www.google.com/maps/search/?api=1&query=Одеса+Ванний+провулок+3" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Ванний+провулок+3+Одеса" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
             </div>
         </section>
 
@@ -188,57 +193,78 @@
                 <input type="text" id="name" placeholder="Ваше ім'я" required>
                 <select id="status" required>
                     <option value="" disabled selected>Чи зможете ви прийти?</option>
-                    <option>Так, із задоволенням!</option>
-                    <option>На жаль, не зможу</option>
+                    <option value="Так, прийду">Так, із задоволенням!</option>
+                    <option value="Не зможу">На жаль, не зможу</option>
                 </select>
                 <button type="submit" id="submitBtn">ВІДПРАВИТИ</button>
             </form>
         </section>
 
-        <p style="margin: 60px 0; font-size: 2rem; font-family: 'Great Vibes'; color: var(--accent-gold);">Чекаємо на вас з любовью💛</p>
+        <p style="margin: 60px 0; font-size: 2rem; font-family: 'Great Vibes'; color: var(--accent-gold);">Чекаємо на вас з любов'ю🩵</p>
     </div>
 
     <script>
-    function openInvitation() {
-        document.getElementById('env').classList.add('is-open');
-        setTimeout(() => {
-            document.getElementById('wrapper').classList.add('is-open-fade');
-            document.body.classList.add('opened');
-            setTimeout(() => { document.getElementById('wrapper').style.display = 'none'; }, 1000);
-        }, 800);
+    function init() { 
+        window.scrollTo(0,0); 
+        document.body.style.overflow = "hidden"; 
     }
 
-    // ТЕЛЕГРАМ БОТ
-    const TOKEN = "8671545811:AAH91K8IUIL7zfq0LKtYqN8AZPn9pnLIwg8";
-    const CHAT_ID = "616781226";
+    function openInvitation() {
+        document.getElementById('wrapper').classList.add('is-open');
+        document.body.classList.add('opened');
+        document.body.style.overflow = "visible";
+        setTimeout(() => { document.getElementById('wrapper').style.display = 'none'; }, 1100);
+        checkSwatches();
+    }
 
-    document.getElementById('tgForm').onsubmit = function(e) {
-        e.preventDefault();
-        const btn = document.getElementById('submitBtn');
-        btn.innerText = "Відправка...";
-        const text = `🎉 Відповідь!\n👤 Ім'я: ${document.getElementById('name').value}\n✅ Статус: ${document.getElementById('status').value}`;
-
-        fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ chat_id: CHAT_ID, text: text })
-        }).then(() => {
-            alert('Дякуємо! Відповідь надіслана.');
-            btn.innerText = "ВІДПРАВИТИ";
-            this.reset();
-        });
-    };
-
-    // ТАЙМЕР
     const weddingDate = new Date("Jun 06, 2026 13:30:00").getTime();
     setInterval(() => {
-        const diff = weddingDate - new Date().getTime();
+        const now = new Date().getTime();
+        const diff = weddingDate - now;
         if (diff > 0) {
             document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
             document.getElementById('h').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             document.getElementById('m').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         }
     }, 1000);
+
+    function checkSwatches() {
+        const swatchesContainer = document.getElementById('swatches');
+        if (!swatchesContainer) return;
+        swatchesContainer.querySelectorAll('.swatch').forEach((s, i) => {
+            setTimeout(() => s.classList.add('visible'), i * 150);
+        });
+    }
+
+    // ТЕЛЕГРАМ БОТ
+    const TOKEN = "8671545811:AAH91K8IUIL7zfq0LKtYqN8AZPn9pnLIwg8";
+    const CHAT_ID = "616781226";
+
+    document.getElementById('tgForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        const name = document.getElementById('name').value;
+        const status = document.getElementById('status').value;
+        
+        btn.disabled = true;
+        btn.innerText = "Відправка...";
+
+        const message = `🎉 Нова відповідь!\n👤 Ім'я: ${name}\n✅ Статус: ${status}`;
+
+        fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+        }).then(() => {
+            alert('Дякуємо! Відповідь надіслана.');
+            btn.disabled = false;
+            btn.innerText = "ВІДПРАВИТИ";
+            this.reset();
+        }).catch(() => {
+            alert('Помилка відправки.');
+            btn.disabled = false;
+        });
+    });
     </script>
 </body>
 </html>
