@@ -69,7 +69,6 @@
         h2 { font-weight: 500; font-size: 2rem; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 3px; }
         .special-text { font-family: 'Great Vibes'; font-size: 3.5rem; margin: 20px 0; }
 
-        /* Таймер */
         .timer { display: flex; justify-content: center; margin: 30px 0; }
         .timer-item { padding: 0 15px; border-right: 1px solid var(--accent-gold); }
         .timer-item:last-child { border-right: none; }
@@ -83,7 +82,6 @@
         .calendar-wrap { padding: 15px; background: white; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.02); }
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; font-family: 'Montserrat'; font-size: 0.9rem; }
         
-        /* БІЛЕ СЕРЦЕ */
         .heart-date { position: relative; color: #5d544b !important; z-index: 1; font-weight: bold; }
         .heart-date::before { 
             content: '❤'; position: absolute; top: 50%; left: 50%; 
@@ -99,12 +97,10 @@
             border: 4px solid white; box-shadow: 2px 5px 15px rgba(0,0,0,0.1);
             opacity: 0; transform: translateY(20px); 
             transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            background-image: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.3) 0%, transparent 75%);
         }
         .swatch.visible { opacity: 1; transform: translateY(0); }
 
-        .loc-img { width: 100%; height: 230px; border-radius: 20px; background-size: cover; background-position: center; margin-bottom: 15px; background-color: #eee; }
-        .map-btn { display: inline-block; padding: 12px 35px; border: 1.5px solid var(--accent-gold); color: var(--accent-gold); text-decoration: none; border-radius: 30px; font-size: 10px; letter-spacing: 2px; font-weight: 600; text-transform: uppercase; }
+        .map-btn { display: inline-block; padding: 12px 35px; border: 1.5px solid var(--accent-gold); color: var(--accent-gold); text-decoration: none; border-radius: 30px; font-size: 10px; letter-spacing: 2px; font-weight: 600; text-transform: uppercase; margin-top: 10px; }
 
         .rsvp-form { background: #f3ece4; padding: 40px 25px; border-radius: 25px; }
         .rsvp-form input, .rsvp-form select {
@@ -132,10 +128,6 @@
         <section class="section">
             <h2>Особливий День</h2>
             <p class="special-text">Дорогі друзі!</p>
-            <p style="font-size: 1.25rem; line-height: 1.7; padding: 0 10px;">
-                Незабаром у нашому житті відбудеться важлива подія — наше весілля!<br>
-                Ми віримо, що цей день стане щасливим початком нашого спільного життя.
-            </p>
             <div class="timer">
                 <div class="timer-item"><span class="timer-num" id="d">00</span><span class="timer-label">днів</span></div>
                 <div class="timer-item"><span class="timer-num" id="h">00</span><span class="timer-label">год</span></div>
@@ -147,12 +139,12 @@
             <h3 style="text-transform: uppercase; letter-spacing: 5px; margin-bottom: 15px; font-family: 'Montserrat'; font-size: 1.2rem;">Червень</h3>
             <div class="calendar-container">
                 <div class="calendar-wrap">
-                    <div class="calendar-grid"><span style="color:#bbb">Пн</span><span style="color:#bbb">Вт</span><span style="color:#bbb">Ср</span><span style="color:#bbb">Чт</span><span style="color:#bbb">Пт</span><span style="color:#bbb">Сб</span><span style="color:#bbb">Нд</span>
+                    <div class="calendar-grid">
+                        <span style="color:#bbb">Пн</span><span style="color:#bbb">Вт</span><span style="color:#bbb">Ср</span><span style="color:#bbb">Чт</span><span style="color:#bbb">Пт</span><span style="color:#bbb">Сб</span><span style="color:#bbb">Нд</span>
                         <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span class="heart-date">6</span><span>7</span>
                         <span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span>
                         <span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span>
-                        <span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span>
-                        <span>29</span><span>30</span>
+                        <span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span>
                     </div>
                 </div>
             </div>
@@ -161,37 +153,43 @@
 
         <section class="section">
             <h3 style="font-family: 'Great Vibes'; font-size: 3rem; color: var(--accent-gold);">Дрес-код</h3>
-            <p style="padding: 0 15px; line-height: 1.5;">Ми будемо дуже вдячні, якщо ви підтримаєте атмосферу свята, та оберете ваші наряди у таких кольорах:</p>
+            <p style="padding: 0 15px;">Ми будемо дуже вдячні, якщо ви підтримаєте атмосферу свята та оберете наряди у таких кольорах:</p>
             <div class="swatches-container" id="swatches">
-                <div class="swatch" style="background-color: #fce4ec;"></div> <div class="swatch" style="background-color: #e1bee7;"></div> <div class="swatch" style="background-color: #d4a5a5;"></div> <div class="swatch" style="background-color: #f5ebe0;"></div> <div class="swatch" style="background-color: #eeddcc;"></div> <div class="swatch" style="background-color: #fdf5e6;"></div> <div class="swatch" style="background-color: #d7c0ae;"></div> <div class="swatch" style="background-color: #b0bec5;"></div> </div>
+                <div class="swatch" style="background-color: #fce4ec;"></div>
+                <div class="swatch" style="background-color: #e1bee7;"></div>
+                <div class="swatch" style="background-color: #d4a5a5;"></div>
+                <div class="swatch" style="background-color: #f5ebe0;"></div>
+                <div class="swatch" style="background-color: #eeddcc;"></div>
+                <div class="swatch" style="background-color: #fdf5e6;"></div>
+                <div class="swatch" style="background-color: #d7c0ae;"></div>
+                <div class="swatch" style="background-color: #b0bec5;"></div>
+            </div>
         </section>
 
         <section class="section">
             <div class="loc-card">
                 <h3>Офіційна частина</h3>
-                <div class="loc-img" style="background-image: url('zags.jpg');"></div>
                 <p><strong>Одеський ВРАЦС</strong><br>вул. Ришельєвська 4, Одеса<br><strong>Початок о 13:30</strong></p>
-                <a href="https://maps.google.com" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=вулиця+Рішельєвська+4+Одеса" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
             </div>
 
             <div class="loc-card" style="margin-top: 40px;">
                 <h3>Банкет</h3>
-                <div class="loc-img" style="background-image: url('restaurant.jpg');"></div>
                 <p><strong>Ресторан</strong><br>Ванний провулок 3, Одеса<br><strong>Початок о 16:00</strong></p>
-                <a href="https://maps.google.com" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Ванний+провулок+3+Одеса" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
             </div>
         </section>
 
         <section class="section rsvp-form">
             <h3>Підтвердіть присутність</h3>
             <form id="tgForm">
-                <input type="text" placeholder="Ваше ім'я" required>
-                <select required>
+                <input type="text" id="name" placeholder="Ваше ім'я" required>
+                <select id="status" required>
                     <option value="" disabled selected>Чи зможете ви прийти?</option>
-                    <option>Так, із задоволенням!</option>
-                    <option>На жаль, не зможу</option>
+                    <option value="Так, прийду">Так, із задоволенням!</option>
+                    <option value="Не зможу">На жаль, не зможу</option>
                 </select>
-                <button type="submit">ВІДПРАВИТИ</button>
+                <button type="submit" id="btnSend">ВІДПРАВИТИ</button>
             </form>
         </section>
 
@@ -199,11 +197,7 @@
     </div>
 
     <script>
-    function init() { 
-        window.scrollTo(0,0); 
-        document.body.style.overflow = "hidden"; 
-    }
-
+    function init() { window.scrollTo(0,0); document.body.style.overflow = "hidden"; }
     function openInvitation() {
         document.getElementById('wrapper').classList.add('is-open');
         document.body.classList.add('opened');
@@ -212,7 +206,40 @@
         checkSwatches();
     }
 
-    const weddingDate = new Date("Jun 06, 2026 13:30:00").getTime();setInterval(() => {
+    // ТЕЛЕГРАМ БОТ
+    const TOKEN = "8671545811:AAH91K8IUIL7zfq0LKtYqN8AZPn9pnLIwg8"; 
+    const CHAT_ID = "ВСТАВЬ_СЮДА_СВОЙ_ID"; 
+
+    document.getElementById('tgForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('btnSend');
+        btn.innerText = "Відправка...";
+        btn.disabled = true;
+
+        const name = document.getElementById('name').value;
+        const status = document.getElementById('status').value;
+        const text = 🎉 Нова відповідь!\n👤 Ім'я: ${name}\n✅ Статус: ${status};
+
+        fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: CHAT_ID, text: text })
+        }).then(response => {
+            if(response.ok) {
+                alert('Дякуємо! Відповідь надіслана.');
+                this.reset();
+            } else {
+                alert('Помилка. Перевірте CHAT_ID.');
+            }
+        }).catch(() => alert('Помилка мережі.'))
+        .finally(() => {
+            btn.innerText = "ВІДПРАВИТИ";
+            btn.disabled = false;
+        });
+    });
+
+    const weddingDate = new Date("Jun 06, 2026 13:30:00").getTime();
+    setInterval(() => {
         const now = new Date().getTime();
         const diff = weddingDate - now;
         if (diff > 0) {
@@ -232,9 +259,7 @@
             });
         }
     }
-
     window.addEventListener('scroll', checkSwatches);
     </script>
 </body>
 </html>
-
