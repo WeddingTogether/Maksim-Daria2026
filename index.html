@@ -47,8 +47,9 @@
             border-radius: 50%; z-index: 100; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            -webkit-tap-highlight-color: transparent;
         }
-        .wax-seal span { color: white; font-family: 'Montserrat'; font-size: 10px; text-transform: uppercase; text-align: center; font-weight: 600; }
+        .wax-seal span { color: white; font-family: 'Montserrat'; font-size: 10px; text-transform: uppercase; text-align: center; font-weight: 600; pointer-events: none; }
 
         .envelope-date {
             position: absolute; bottom: 15%; width: 100%; text-align: center;
@@ -119,7 +120,7 @@
         <div class="envelope">
             <div class="top-fold"></div>
             <div class="envelope-text"><h1>Максим та Дар’я</h1></div>
-            <div class="wax-seal" id="openBtn"><span>відкрити</span></div>
+            <div class="wax-seal" onclick="openInvitation()"><span>відкрити</span></div>
             <div class="envelope-date">06.06.2026</div>
         </div>
     </div>
@@ -143,8 +144,8 @@
                         <span style="color:#bbb">Пн</span><span style="color:#bbb">Вт</span><span style="color:#bbb">Ср</span><span style="color:#bbb">Чт</span><span style="color:#bbb">Пт</span><span style="color:#bbb">Сб</span><span style="color:#bbb">Нд</span>
                         <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span class="heart-date">6</span><span>7</span>
                         <span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span>
-                        <span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span>
-                        <span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span>
+                        <span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span>
+                        <span>29</span><span>30</span>
                     </div>
                 </div>
             </div>
@@ -170,7 +171,7 @@
             <div class="loc-card">
                 <h3>Офіційна частина</h3>
                 <p><strong>Одеський ВРАЦС</strong><br>вул. Ришельєвська 4, Одеса<br><strong>Початок о 13:30</strong></p>
-                <a href="https://www.google.com/maps/search/?api=1&query=Одеса+вулиця+Рішельєвська+4" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Одеський+ВРАЦС+Ришельєвська+4" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
             </div>
 
             <div class="loc-card" style="margin-top: 40px;">
@@ -199,20 +200,21 @@
     <script>
     function init() { window.scrollTo(0,0); document.body.style.overflow = "hidden"; }
 
-    // Исправленная функция открытия
-    document.getElementById('openBtn').addEventListener('click', function() {
-        document.getElementById('wrapper').classList.add('is-open');
+    // Найбільш стабільна функція відкриття
+    function openInvitation() {
+        var wrapper = document.getElementById('wrapper');
+        wrapper.classList.add('is-open');
         document.body.classList.add('opened');
         document.body.style.overflow = "visible";
-        setTimeout(() => { 
-            document.getElementById('wrapper').style.display = 'none'; 
-            checkSwatches(); // Запуск анимации при открытии
+        setTimeout(function() { 
+            wrapper.style.display = 'none'; 
+            checkSwatches(); 
         }, 1100);
-    });
+    }
 
     // ТЕЛЕГРАМ БОТ
     const TOKEN = "8671545811:AAH91K8IUIL7zfq0LKtYqN8AZPn9pnLIwg8"; 
-    const CHAT_ID = "616781226"; // Я вставил твой ID (если он верный)
+    const CHAT_ID = "616781226"; 
 
     document.getElementById('tgForm').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -233,7 +235,7 @@
                 alert('Дякуємо! Відповідь надіслана.');
                 this.reset();
             } else {
-                alert('Помилка відправки. Перевірте налаштування бота.');
+                alert('Помилка відправки.');
             }
         }).catch(() => alert('Помилка мережі.'))
         .finally(() => {
@@ -242,7 +244,6 @@
         });
     });
 
-    // Таймер
     const weddingDate = new Date("Jun 06, 2026 13:30:00").getTime();
     setInterval(() => {
         const now = new Date().getTime();
@@ -254,7 +255,6 @@
         }
     }, 1000);
 
-    // Анимация цветов
     function checkSwatches() {
         const swatchesContainer = document.getElementById('swatches');
         if (!swatchesContainer) return;
