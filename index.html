@@ -24,7 +24,7 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; align-items: center; justify-content: center;
             z-index: 99999; background: #f3ece4;
-            transition: opacity 0.8s ease;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
         }
         .envelope {
             position: relative; width: 100%; height: 100%;
@@ -37,77 +37,78 @@
             transition: transform 1s ease; transform-origin: top;
         }
         .envelope-text {
-            position: absolute; top: 25%; text-align: center; z-index: 9; width: 100%; pointer-events: none;
+            position: absolute; top: 25%; text-align: center; z-index: 90; width: 100%; pointer-events: none;
         }
         .envelope-text h1 { font-family: 'Great Vibes'; font-size: clamp(2.5rem, 9vw, 4.2rem); margin: 0; color: var(--text-main); }
 
         .wax-seal {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 120px; height: 120px; background: var(--wax-color);
+            width: 130px; height: 130px; background: var(--wax-color);
             border-radius: 50%; z-index: 100; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            pointer-events: all !important;
         }
-        .wax-seal span { color: white; font-family: 'Montserrat'; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; pointer-events: none; }
+        .wax-seal span { color: white; font-family: 'Montserrat'; font-size: 10px; text-transform: uppercase; text-align: center; font-weight: 600; }
 
         .envelope-date {
             position: absolute; bottom: 15%; width: 100%; text-align: center;
-            z-index: 9; font-family: 'Montserrat'; letter-spacing: 5px; font-size: 1.1rem;
+            z-index: 90; font-family: 'Montserrat'; letter-spacing: 5px; font-size: 1.1rem;
         }
 
         .is-open .top-fold { transform: rotateX(180deg); }
-        .is-open { opacity: 0; visibility: hidden; pointer-events: none; }
+        .is-open.envelope-wrapper { opacity: 0; visibility: hidden; }
 
         /* --- КОНТЕНТ --- */
         .invitation-card {
             max-width: 500px; margin: 0 auto; padding: 60px 20px; text-align: center;
-            opacity: 0; transform: translateY(20px); transition: 0.8s ease 0.4s;
+            opacity: 0; transform: translateY(30px); transition: 1s ease 0.5s;
         }
         body.opened .invitation-card { opacity: 1; transform: translateY(0); }
 
-        .section { padding: 40px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
-        h2 { font-weight: 500; font-size: 1.8rem; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 3px; }
+        .section { padding: 45px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        h2 { font-weight: 500; font-size: 2rem; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 3px; }
         .special-text { font-family: 'Great Vibes'; font-size: 3.5rem; margin: 20px 0; }
 
-        /* ТАЙМЕР */
         .timer { display: flex; justify-content: center; margin: 30px 0; }
         .timer-item { padding: 0 15px; border-right: 1px solid var(--accent-gold); }
         .timer-item:last-child { border-right: none; }
-        .timer-num { font-size: 2.2rem; font-weight: 300; color: var(--accent-gold); display: block; }
+        .timer-num { font-size: 2.5rem; font-weight: 300; color: var(--accent-gold); display: block; }
         .timer-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; }
 
-        /* КАЛЕНДАР */
-        .calendar-container { display: inline-block; padding: 15px; border: 1px solid var(--accent-gold); border-radius: 15px; background: white; }
-        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; font-family: 'Montserrat'; font-size: 0.85rem; }
+        .calendar-container {
+            display: inline-block; padding: 20px; border: 1px solid var(--accent-gold); border-radius: 15px; position: relative;
+        }
+        .calendar-wrap { padding: 15px; background: white; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.02); }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; font-family: 'Montserrat'; font-size: 0.9rem; }
         
-        /* БІЛЕ СЕРЦЕ ЧЕРЕЗ SVG */
-        .heart-date { position: relative; font-weight: bold; z-index: 5; }
-        .heart-svg { 
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 40px; height: 40px; z-index: -1; fill: white;
+        .heart-date { position: relative; color: #5d544b !important; z-index: 1; font-weight: bold; }
+        .heart-date::before { 
+            content: '❤'; position: absolute; top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); color: #ffffff !important; 
+            font-size: 2.6rem; z-index: -1;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
-        /* ДРЕС-КОД */
-        .swatches-container { display: flex; justify-content: center; flex-wrap: wrap; margin-top: 25px; gap: 10px; }
+        .swatches-container { display: flex; justify-content: center; flex-wrap: wrap; margin-top: 30px; gap: 12px; min-height: 80px; }
         .swatch {
-            width: 60px; height: 60px; border-radius: 50%;
-            border: 3px solid white; box-shadow: 2px 4px 10px rgba(0,0,0,0.1);
-            opacity: 0; transform: scale(0.8); transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 65px; height: 65px; border-radius: 50%;
+            border: 4px solid white; box-shadow: 2px 5px 15px rgba(0,0,0,0.1);
+            opacity: 0; transform: translateY(20px); 
+            transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .swatch.visible { opacity: 1; transform: scale(1); }
+        .swatch.visible { opacity: 1; transform: translateY(0); }
 
-        .map-btn { display: inline-block; padding: 12px 30px; border: 1.5px solid var(--accent-gold); color: var(--accent-gold); text-decoration: none; border-radius: 30px; font-size: 10px; letter-spacing: 2px; font-weight: 600; text-transform: uppercase; margin-top: 10px; }
+        .loc-img { width: 100%; height: 230px; border-radius: 20px; background-size: cover; background-position: center; margin-bottom: 15px; background-color: #eee; }
+        .map-btn { display: inline-block; padding: 12px 35px; border: 1.5px solid var(--accent-gold); color: var(--accent-gold); text-decoration: none; border-radius: 30px; font-size: 10px; letter-spacing: 2px; font-weight: 600; text-transform: uppercase; }
 
-        .rsvp-form { background: #f3ece4; padding: 35px 20px; border-radius: 25px; margin-top: 20px; }
+        .rsvp-form { background: #f3ece4; padding: 40px 25px; border-radius: 25px; }
         .rsvp-form input, .rsvp-form select {
-            width: 100%; padding: 12px; margin: 8px 0; border: none; border-bottom: 1px solid var(--accent-gold);
-            background: transparent; font-size: 1rem; outline: none; box-sizing: border-box; font-family: 'Cormorant Garamond';
+            width: 100%; padding: 12px; margin: 10px 0; border: none; border-bottom: 1px solid var(--accent-gold);
+            background: transparent; font-size: 1.1rem; outline: none; box-sizing: border-box; font-family: 'Cormorant Garamond';
         }
         .rsvp-form button {
             background: var(--accent-gold); color: white; border: none; padding: 15px;
-            width: 100%; border-radius: 25px; font-family: 'Montserrat'; font-weight: bold; margin-top: 15px; cursor: pointer;
+            width: 100%; border-radius: 25px; font-family: 'Montserrat'; font-weight: bold; margin-top: 20px; cursor: pointer;
         }
     </style>
 </head>
@@ -117,9 +118,7 @@
         <div class="envelope">
             <div class="top-fold"></div>
             <div class="envelope-text"><h1>Максим та Дар’я</h1></div>
-            <div class="wax-seal" onclick="openInvitation()" ontouchstart="openInvitation()">
-                <span>відкрити</span>
-            </div>
+            <div class="wax-seal" onclick="openInvitation()"><span>відкрити</span></div>
             <div class="envelope-date">06.06.2026</div>
         </div>
     </div>
@@ -136,27 +135,24 @@
         </section>
 
         <section class="section">
-            <h3 style="text-transform: uppercase; letter-spacing: 5px; margin-bottom: 15px; font-family: 'Montserrat'; font-size: 1.1rem;">Червень</h3>
+            <h3 style="text-transform: uppercase; letter-spacing: 5px; margin-bottom: 15px; font-family: 'Montserrat'; font-size: 1.2rem;">Червень</h3>
             <div class="calendar-container">
-                <div class="calendar-grid">
-                    <span style="color:#bbb">Пн</span><span style="color:#bbb">Вт</span><span style="color:#bbb">Ср</span><span style="color:#bbb">Чт</span><span style="color:#bbb">Пт</span><span style="color:#bbb">Сб</span><span style="color:#bbb">Нд</span>
-                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
-                    <span class="heart-date">
-                        6
-                        <svg class="heart-svg" viewBox="0 0 32 32"><path d="M16 28.5L13.8 26.4C6 19.3 1 14.8 1 9.3 1 4.8 4.5 1.3 9 1.3c2.5 0 5 1.2 6.5 3 1.5-1.8 4-3 6.5-3 4.5 0 8 3.5 8 8 0 5.5-5 10-12.8 17.1L16 28.5z"/></svg>
-                    </span>
-                    <span>7</span>
-                    <span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span>
-                    <span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span>
-                    <span>29</span><span>30</span>
+                <div class="calendar-wrap">
+                    <div class="calendar-grid">
+                        <span style="color:#bbb">Пн</span><span style="color:#bbb">Вт</span><span style="color:#bbb">Ср</span><span style="color:#bbb">Чт</span><span style="color:#bbb">Пт</span><span style="color:#bbb">Сб</span><span style="color:#bbb">Нд</span>
+                        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span class="heart-date">6</span><span>7</span>
+                        <span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span>
+                        <span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span>
+                        <span>29</span><span>30</span>
+                    </div>
                 </div>
             </div>
-            <p style="font-family: 'Montserrat'; margin-top: 15px; color: var(--accent-gold); font-weight: 600; letter-spacing: 3px;">2026</p>
+            <p style="font-family: 'Montserrat'; margin-top: 15px; color: var(--accent-gold); font-weight: 600; letter-spacing: 2px;">2026</p>
         </section>
 
         <section class="section">
             <h3 style="font-family: 'Great Vibes'; font-size: 3rem; color: var(--accent-gold);">Дрес-код</h3>
-            <p>Будемо вдячні за наряди у цих кольорах:</p>
+            <p style="padding: 0 15px;">Ми будемо дуже вдячні за наряди у таких кольорах:</p>
             <div class="swatches-container" id="swatches">
                 <div class="swatch" style="background-color: #fce4ec;"></div>
                 <div class="swatch" style="background-color: #e1bee7;"></div>
@@ -172,10 +168,11 @@
         <section class="section">
             <div class="loc-card">
                 <h3>Офіційна частина</h3>
-                <p><strong>Одеський ВРАЦС</strong><br>Ришельєвська 4, Одеса<br><strong>Початок о 13:30</strong></p>
+                <p><strong>Одеський ВРАЦС</strong><br>вул. Ришельєвська 4, Одеса<br><strong>Початок о 13:30</strong></p>
                 <a href="https://www.google.com/maps/search/?api=1&query=Одеський+ВРАЦС+Ришельєвська+4" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
             </div>
-            <div class="loc-card" style="margin-top: 35px;">
+
+            <div class="loc-card" style="margin-top: 40px;">
                 <h3>Банкет</h3>
                 <p><strong>Ресторан</strong><br>Ванний провулок 3, Одеса<br><strong>Початок о 16:00</strong></p>
                 <a href="https://www.google.com/maps/search/?api=1&query=Ванний+провулок+3+Одеса" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
@@ -187,55 +184,51 @@
             <form id="tgForm">
                 <input type="text" id="name" placeholder="Ваше ім'я" required>
                 <select id="status" required>
-                    <option value="" disabled selected>Ви прийдете?</option>
-                    <option value="Так">Так, із задоволенням!</option>
-                    <option value="Ні">На жаль, не зможу</option>
+                    <option value="" disabled selected>Чи зможете ви прийти?</option>
+                    <option value="Так, прийду">Так, із задоволенням!</option>
+                    <option value="Не зможу">На жаль, не зможу</option>
                 </select>
                 <button type="submit" id="btnSend">ВІДПРАВИТИ</button>
             </form>
         </section>
 
-        <p style="margin: 50px 0; font-size: 1.8rem; font-family: 'Great Vibes'; color: var(--accent-gold);">З любов'ю чекаэмо на вас🩵</p>
+        <p style="margin: 60px 0; font-size: 2rem; font-family: 'Great Vibes'; color: var(--accent-gold);">Чекаємо на вас з любовью💛</p>
     </div>
 
     <script>
     function init() { window.scrollTo(0,0); document.body.style.overflow = "hidden"; }
-
+    
     function openInvitation() {
-        var wrap = document.getElementById('wrapper');
-        wrap.classList.add('is-open'); // Запускаем анимацию
+        document.getElementById('wrapper').classList.add('is-open');
         document.body.classList.add('opened');
         document.body.style.overflow = "visible";
-        
-        // Скрываем полностью через время анимации
-        setTimeout(function() { 
-            wrap.style.display = 'none'; 
-            animateSwatches(); 
-        }, 800);
+        setTimeout(() => { document.getElementById('wrapper').style.display = 'none'; }, 1100);
+        checkSwatches();
     }
 
+    // ТЕЛЕГРАМ БОТ
     const TOKEN = "8671545811:AAH91K8IUIL7zfq0LKtYqN8AZPn9pnLIwg8"; 
     const CHAT_ID = "616781226"; 
 
     document.getElementById('tgForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        const btn = document.getElementById('btnSend');
         const name = document.getElementById('name').value;
         const status = document.getElementById('status').value;
-        btn.disabled = true;
+        const text = 🎉 Нова відповідь!\n👤 Ім'я: ${name}\n✅ Статус: ${status};
 
         fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },body: JSON.stringify({ chat_id: CHAT_ID, text: 🎉 Відповідь!\n👤 ${name}\n✅ ${status} })
-        }).then(() => {
-            alert('Дякуємо!');
-            btn.disabled = false;
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: CHAT_ID, text: text })
+        }).then(() => {alert('Дякуємо! Відповідь надіслана.');
+            this.reset();
         });
     });
 
     const weddingDate = new Date("Jun 06, 2026 13:30:00").getTime();
     setInterval(() => {
-        const diff = weddingDate - new Date().getTime();
+        const now = new Date().getTime();
+        const diff = weddingDate - now;
         if (diff > 0) {
             document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
             document.getElementById('h').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -243,11 +236,17 @@
         }
     }, 1000);
 
-    function animateSwatches() {
-        document.querySelectorAll('.swatch').forEach((s, i) => {
-            setTimeout(() => s.classList.add('visible'), i * 100);
-        });
+    function checkSwatches() {
+        const swatchesContainer = document.getElementById('swatches');
+        if (!swatchesContainer) return;
+        const rect = swatchesContainer.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.9) {
+            swatchesContainer.querySelectorAll('.swatch').forEach((s, i) => {
+                setTimeout(() => s.classList.add('visible'), i * 150);
+            });
+        }
     }
+    window.addEventListener('scroll', checkSwatches);
     </script>
 </body>
 </html>
