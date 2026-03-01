@@ -100,7 +100,7 @@
         }
         .swatch.visible { opacity: 1; transform: translateY(0); }
 
-        .map-btn { display: inline-block; padding: 12px 35px; border: 1.5px solid var(--accent-gold); color: var(--accent-gold); text-decoration: none; border-radius: 30px; font-size: 10px; letter-spacing: 2px; font-weight: 600; text-transform: uppercase; margin-top: 10px; }
+        .map-btn { display: inline-block; padding: 12px 35px; border: 1.5px solid var(--accent-gold); color: var(--accent-gold); text-decoration: none; border-radius: 30px; font-size: 10px; letter-spacing: 2px; font-weight: 600; text-transform: uppercase; margin-top: 15px; }
 
         .rsvp-form { background: #f3ece4; padding: 40px 25px; border-radius: 25px; }
         .rsvp-form input, .rsvp-form select {
@@ -119,7 +119,7 @@
         <div class="envelope">
             <div class="top-fold"></div>
             <div class="envelope-text"><h1>Максим та Дар’я</h1></div>
-            <div class="wax-seal" onclick="openInvitation()"><span>відкрити</span></div>
+            <div class="wax-seal" id="openBtn"><span>відкрити</span></div>
             <div class="envelope-date">06.06.2026</div>
         </div>
     </div>
@@ -170,13 +170,13 @@
             <div class="loc-card">
                 <h3>Офіційна частина</h3>
                 <p><strong>Одеський ВРАЦС</strong><br>вул. Ришельєвська 4, Одеса<br><strong>Початок о 13:30</strong></p>
-                <a href="https://www.google.com/maps/search/?api=1&query=вулиця+Рішельєвська+4+Одеса" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Одеса+вулиця+Рішельєвська+4" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
             </div>
 
             <div class="loc-card" style="margin-top: 40px;">
                 <h3>Банкет</h3>
                 <p><strong>Ресторан</strong><br>Ванний провулок 3, Одеса<br><strong>Початок о 16:00</strong></p>
-                <a href="https://www.google.com/maps/search/?api=1&query=Ванний+провулок+3+Одеса" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Одеса+Ванний+провулок+3" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
             </div>
         </section>
 
@@ -198,17 +198,21 @@
 
     <script>
     function init() { window.scrollTo(0,0); document.body.style.overflow = "hidden"; }
-    function openInvitation() {
+
+    // Исправленная функция открытия
+    document.getElementById('openBtn').addEventListener('click', function() {
         document.getElementById('wrapper').classList.add('is-open');
         document.body.classList.add('opened');
         document.body.style.overflow = "visible";
-        setTimeout(() => { document.getElementById('wrapper').style.display = 'none'; }, 1100);
-        checkSwatches();
-    }
+        setTimeout(() => { 
+            document.getElementById('wrapper').style.display = 'none'; 
+            checkSwatches(); // Запуск анимации при открытии
+        }, 1100);
+    });
 
     // ТЕЛЕГРАМ БОТ
     const TOKEN = "8671545811:AAH91K8IUIL7zfq0LKtYqN8AZPn9pnLIwg8"; 
-    const CHAT_ID = "ВСТАВЬ_СЮДА_СВОЙ_ID"; 
+    const CHAT_ID = "616781226"; // Я вставил твой ID (если он верный)
 
     document.getElementById('tgForm').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -229,7 +233,7 @@
                 alert('Дякуємо! Відповідь надіслана.');
                 this.reset();
             } else {
-                alert('Помилка. Перевірте CHAT_ID.');
+                alert('Помилка відправки. Перевірте налаштування бота.');
             }
         }).catch(() => alert('Помилка мережі.'))
         .finally(() => {
@@ -238,6 +242,7 @@
         });
     });
 
+    // Таймер
     const weddingDate = new Date("Jun 06, 2026 13:30:00").getTime();
     setInterval(() => {
         const now = new Date().getTime();
@@ -249,6 +254,7 @@
         }
     }, 1000);
 
+    // Анимация цветов
     function checkSwatches() {
         const swatchesContainer = document.getElementById('swatches');
         if (!swatchesContainer) return;
