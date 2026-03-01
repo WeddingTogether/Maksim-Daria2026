@@ -11,12 +11,11 @@
             --accent-gold: #bda27e; 
             --text-main: #5d544b; 
             --wax-color: #c6a49a;
-            --heart-peach: #ffccb3; /* Той самий персик */
         }
 
         body { 
             margin: 0; background: var(--cream-bg); 
-            font-family: 'Cormorant Garamond', serif; color: var(--text-main);
+            font-family: 'Cormorant Gramond', serif; color: var(--text-main);
             overflow-x: hidden; -webkit-font-smoothing: antialiased;
         }
 
@@ -84,15 +83,16 @@
         .calendar-wrap { padding: 15px; background: white; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.02); }
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; font-family: 'Montserrat'; font-size: 0.9rem; }
         
-        /* Персикове серце */
-        .heart-date { position: relative; color: white !important; z-index: 1; font-weight: bold; }
+        /* БІЛЕ СЕРЦЕ */
+        .heart-date { position: relative; color: #5d544b !important; z-index: 1; font-weight: bold; }
         .heart-date::before { 
             content: '❤'; position: absolute; top: 50%; left: 50%; 
-            transform: translate(-50%, -55%); color: var(--heart-peach) !important; 
-            font-size: 2.5rem; z-index: -1; 
+            transform: translate(-50%, -50%); color: #ffffff !important; 
+            font-size: 2.6rem; z-index: -1;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
-        /* ДРЕС-КОД (Warm Neutrals) */
+        /* ДРЕС-КОД (Pastel & Warm Palette) */
         .swatches-container { display: flex; justify-content: center; flex-wrap: wrap; margin-top: 30px; gap: 12px; min-height: 80px; }
         .swatch {
             width: 65px; height: 65px; border-radius: 50%;
@@ -163,7 +163,7 @@
             <h3 style="font-family: 'Great Vibes'; font-size: 3rem; color: var(--accent-gold);">Дрес-код</h3>
             <p style="padding: 0 15px; line-height: 1.5;">Ми будемо дуже вдячні, якщо ви підтримаєте атмосферу свята, та оберете ваші наряди у таких кольорах:</p>
             <div class="swatches-container" id="swatches">
-                <div class="swatch" style="background-color: #8d7367;"></div> <div class="swatch" style="background-color: #bca08d;"></div> <div class="swatch" style="background-color: #d7c0ae;"></div> <div class="swatch" style="background-color: #e5d3c5;"></div> <div class="swatch" style="background-color: #f2e8df;"></div> </div>
+                <div class="swatch" style="background-color: #fce4ec;"></div> <div class="swatch" style="background-color: #e1bee7;"></div> <div class="swatch" style="background-color: #d4a5a5;"></div> <div class="swatch" style="background-color: #f5ebe0;"></div> <div class="swatch" style="background-color: #d7c0ae;"></div> <div class="swatch" style="background-color: #b0bec5;"></div> </div>
         </section>
 
         <section class="section">
@@ -171,14 +171,14 @@
                 <h3>Офіційна частина</h3>
                 <div class="loc-img" style="background-image: url('zags.jpg');"></div>
                 <p><strong>Одеський ВРАЦС</strong><br>вул. Ришельєвська 4, Одеса<br><strong>Початок о 13:30</strong></p>
-                <a href="https://maps.google.com/?q=Ришельєвська+4+Одеса" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
+                <a href="https://maps.google.com" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
             </div>
 
             <div class="loc-card" style="margin-top: 40px;">
                 <h3>Банкет</h3>
                 <div class="loc-img" style="background-image: url('restaurant.jpg');"></div>
                 <p><strong>Ресторан</strong><br>Ванний провулок 3, Одеса<br><strong>Початок о 16:00</strong></p>
-                <a href="https://maps.google.com/?q=Ванний+провулок+3+Одеса" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
+                <a href="https://maps.google.com" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
             </div>
         </section>
 
@@ -195,7 +195,7 @@
             </form>
         </section>
 
-        <p style="margin: 60px 0; font-size: 2rem; font-family: 'Great Vibes'; color: var(--accent-gold);">Чекаємо на вас з любовью☺️</p>
+        <p style="margin: 60px 0; font-size: 2rem; font-family: 'Great Vibes'; color: var(--accent-gold);">Чекаємо на вас з любовью🩵</p>
     </div>
 
     <script>
@@ -209,8 +209,6 @@
         document.body.classList.add('opened');
         document.body.style.overflow = "visible";
         setTimeout(() => { document.getElementById('wrapper').style.display = 'none'; }, 1100);
-        
-        // Запуск анимации цветов при открытии, если они уже в зоне видимости
         checkSwatches();
     }
 
@@ -218,14 +216,12 @@
     setInterval(() => {
         const now = new Date().getTime();
         const diff = weddingDate - now;
-        if (diff > 0) {
-            document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+        if (diff > 0) {document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
             document.getElementById('h').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             document.getElementById('m').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         }
     }, 1000);
 
-    // Улучшенный скрипт анимации цветов
     function checkSwatches() {
         const swatchesContainer = document.getElementById('swatches');
         const rect = swatchesContainer.getBoundingClientRect();
