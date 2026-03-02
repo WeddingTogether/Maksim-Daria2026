@@ -33,75 +33,53 @@
         .top-fold {
             position: absolute; top: 0; left: 0; width: 0; height: 0;
             border-left: 50vw solid transparent; border-right: 50vw solid transparent;
-            border-top: 40vh solid #e2d6c9; z-index: 10;
+            border-top: 42vh solid #e2d6c9; z-index: 10;
             transition: transform 1s ease; transform-origin: top;
         }
         .envelope-text {
-            position: absolute; top: 25%; text-align: center; z-index: 9; width: 100%; pointer-events: none;
+            position: absolute; top: 22%; text-align: center; z-index: 5; width: 100%; pointer-events: none;
         }
-        .envelope-text h1 { font-family: 'Great Vibes'; font-size: clamp(2.5rem, 9vw, 4.2rem); margin: 0; color: var(--text-main); }
+        .envelope-text h1 { font-family: 'Great Vibes'; font-size: clamp(2.2rem, 8vw, 3.8rem); margin: 0; color: var(--text-main); opacity: 0.9; }
 
         .wax-seal {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 130px; height: 130px; background: var(--wax-color);
+            width: 120px; height: 120px; background: var(--wax-color);
             border-radius: 50%; z-index: 100; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
-        .wax-seal span { color: white; font-family: 'Montserrat'; font-size: 10px; text-transform: uppercase; text-align: center; font-weight: 600; }
+        .wax-seal span { color: white; font-family: 'Montserrat'; font-size: 10px; text-transform: uppercase; text-align: center; font-weight: 600; letter-spacing: 1px; }
 
         .envelope-date {
             position: absolute; bottom: 15%; width: 100%; text-align: center;
-            z-index: 9; font-family: 'Montserrat'; letter-spacing: 5px; font-size: 1.1rem;
+            z-index: 5; font-family: 'Montserrat'; letter-spacing: 5px; font-size: 1.1rem;
         }
 
-        .is-open .top-fold { transform: rotateX(180deg); }
+        .is-open .top-fold { transform: rotateX(180deg); z-index: 1; }
         .is-open-fade { opacity: 0; visibility: hidden; }
 
         /* --- КОНТЕНТ --- */
         .invitation-card {
             max-width: 500px; margin: 0 auto; padding: 60px 20px; text-align: center;
             opacity: 0; transform: translateY(30px); transition: 1s ease 0.5s;
+            display: none;
         }
-        body.opened .invitation-card { opacity: 1; transform: translateY(0); }
+        body.opened .invitation-card { opacity: 1; transform: translateY(0); display: block; }
 
         .section { padding: 45px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
-        h2 { font-weight: 500; font-size: 2rem; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 3px; }
-        .special-text { font-family: 'Great Vibes'; font-size: 3.5rem; margin: 20px 0; }
+        h2 { font-weight: 500; font-size: 1.8rem; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 3px; }
+        .special-text { font-family: 'Great Vibes'; font-size: 3.2rem; margin: 20px 0; }
 
         .timer { display: flex; justify-content: center; margin: 30px 0; }
         .timer-item { padding: 0 15px; border-right: 1px solid var(--accent-gold); }
         .timer-item:last-child { border-right: none; }
-        .timer-num { font-size: 2.5rem; font-weight: 300; color: var(--accent-gold); display: block; }
+        .timer-num { font-size: 2.2rem; font-weight: 300; color: var(--accent-gold); display: block; }
         .timer-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; }
-
-        .calendar-container {
-            display: inline-block; padding: 20px; border: 1px solid var(--accent-gold); border-radius: 15px;
-        }
-        .calendar-wrap { padding: 15px; background: white; border-radius: 10px; }
-        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; font-family: 'Montserrat'; font-size: 0.9rem; }
-        
-        .heart-date { position: relative; color: #5d544b !important; z-index: 1; font-weight: bold; }
-        .heart-date::before { 
-            content: '❤'; position: absolute; top: 50%; left: 50%; 
-            transform: translate(-50%, -50%); color: #ffffff !important; 
-            font-size: 2.6rem; z-index: -1;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-        }
-
-        .swatches-container { display: flex; justify-content: center; flex-wrap: wrap; margin-top: 30px; gap: 12px; }
-        .swatch {
-            width: 65px; height: 65px; border-radius: 50%;
-            border: 4px solid white; box-shadow: 2px 5px 15px rgba(0,0,0,0.1);
-            opacity: 0; transform: translateY(20px); 
-            transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .swatch.visible { opacity: 1; transform: translateY(0); }
 
         .loc-img { width: 100%; height: 230px; border-radius: 20px; background-size: cover; background-position: center; margin-bottom: 15px; background-color: #eee; }
         .map-btn { display: inline-block; padding: 12px 35px; border: 1.5px solid var(--accent-gold); color: var(--accent-gold); text-decoration: none; border-radius: 30px; font-size: 10px; letter-spacing: 2px; font-weight: 600; text-transform: uppercase; }
 
-        .rsvp-form { background: #f3ece4; padding: 40px 25px; border-radius: 25px; }
+        .rsvp-form { background: #f3ece4; padding: 40px 25px; border-radius: 25px; margin-top: 30px; }
         .rsvp-form input, .rsvp-form select {
             width: 100%; padding: 12px; margin: 10px 0; border: none; border-bottom: 1px solid var(--accent-gold);
             background: transparent; font-size: 1.1rem; outline: none; box-sizing: border-box; font-family: 'Cormorant Garamond';
@@ -112,7 +90,7 @@
         }
     </style>
 </head>
-<body onload="window.scrollTo(0,0)">
+<body>
 
     <div class="envelope-wrapper" id="wrapper">
         <div class="envelope" id="env">
@@ -127,7 +105,7 @@
         <section class="section">
             <h2>Особливий День</h2>
             <p class="special-text">Дорогі друзі!</p>
-            <p style="font-size: 1.25rem; line-height: 1.7; padding: 0 10px;">
+            <p style="font-size: 1.25rem; line-height: 1.7;">
                 Незабаром у нашому житті відбудеться важлива подія — наше весілля!<br>
                 Ми віримо, що цей день стане щасливим початком нашого спільного життя.
             </p>
@@ -139,57 +117,25 @@
         </section>
 
         <section class="section">
-            <h3 style="text-transform: uppercase; letter-spacing: 5px; margin-bottom: 15px; font-family: 'Montserrat'; font-size: 1.2rem;">Червень</h3>
-            <div class="calendar-container">
-                <div class="calendar-wrap">
-                    <div class="calendar-grid"> 
-                        <span style="color:#bbb">Пн</span><span style="color:#bbb">Вт</span><span style="color:#bbb">Ср</span><span style="color:#bbb">Чт</span><span style="color:#bbb">Пт</span><span style="color:#bbb">Сб</span><span style="color:#bbb">Нд</span>
-                        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span class="heart-date">6</span><span>7</span>
-                        <span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span>
-                        <span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span>
-                        <span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span>
-                        <span>29</span><span>30</span>
-                    </div>
-                </div>
-            </div>
-            <p style="font-family: 'Montserrat'; margin-top: 15px; color: var(--accent-gold); font-weight: 600; letter-spacing: 2px;">2026</p>
-        </section>
-
-        <section class="section">
-            <h3 style="font-family: 'Great Vibes'; font-size: 3rem; color: var(--accent-gold);">Дрес-код</h3>
-            <p style="padding: 0 15px;">Будемо вдячні за ваші наряди у таких кольорах:</p>
-            <div class="swatches-container" id="swatches">
-                <div class="swatch" style="background-color: #fce4ec;"></div> 
-                <div class="swatch" style="background-color: #e1bee7;"></div> 
-                <div class="swatch" style="background-color: #d4a5a5;"></div> 
-                <div class="swatch" style="background-color: #f5ebe0;"></div> 
-                <div class="swatch" style="background-color: #eeddcc;"></div> 
-                <div class="swatch" style="background-color: #fdf5e6;"></div> 
-                <div class="swatch" style="background-color: #d7c0ae;"></div> 
-                <div class="swatch" style="background-color: #b0bec5;"></div> 
-            </div>
-        </section>
-
-        <section class="section">
             <div class="loc-card">
                 <h3>Офіційна частина</h3>
                 <div class="loc-img" style="background-image: url('zags.jpg');"></div>
                 <p><strong>Одеський ВРАЦС</strong><br>вул. Ришельєвська 4, Одеса<br><strong>Початок о 13:30</strong></p>
-                <a href="https://www.google.com/maps/search/?api=1&query=Ришельєвська+4+Одеса" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
+                <a href="https://maps.google.com/?q=Ришельєвська+4+Одеса" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
             </div>
             <div class="loc-card" style="margin-top: 40px;">
                 <h3>Банкет</h3>
                 <div class="loc-img" style="background-image: url('restaurant.jpg');"></div>
                 <p><strong>Ресторан</strong><br>Ванний провулок 3, Одеса<br><strong>Початок о 16:00</strong></p>
-                <a href="https://www.google.com/maps/search/?api=1&query=Ванний+провулок+3+Одеса" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
+                <a href="https://maps.google.com/?q=Ванний+провулок+3+Одеса" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
             </div>
         </section>
 
         <section class="section rsvp-form">
             <h3>Підтвердіть присутність</h3>
             <form id="tgForm">
-                <input type="text" id="guest_name" placeholder="Ваше ім'я" required>
-                <select id="guest_status" required>
+                <input type="text" id="name" placeholder="Ваше ім'я" required>
+                <select id="status" required>
                     <option value="" disabled selected>Чи зможете ви прийти?</option>
                     <option value="Так, прийду">Так, із задоволенням!</option>
                     <option value="Не зможу">На жаль, не зможу</option>
@@ -198,7 +144,7 @@
             </form>
         </section>
 
-        <p style="margin: 60px 0; font-size: 2rem; font-family: 'Great Vibes'; color: var(--accent-gold);">Чекаємо на вас з любов'ю🩵</p>
+        <p style="margin: 60px 0; font-size: 2rem; font-family: 'Great Vibes'; color: var(--accent-gold);">Чекаємо на вас з любовью💛</p>
     </div>
 
     <script>
@@ -209,43 +155,40 @@
             document.body.classList.add('opened');
             setTimeout(() => { 
                 document.getElementById('wrapper').style.display = 'none';
-                animateSwatches();
             }, 1000);
         }, 800);
     }
 
-    function animateSwatches() {
-        document.querySelectorAll('.swatch').forEach((s, i) => {
-            setTimeout(() => s.classList.add('visible'), i * 150);
-        });
-    }
-
-    // ТЕЛЕГРАМ БОТ
+    // ТЕЛЕГРАМ БОТ (ВИПРАВЛЕНИЙ ТОКЕН)
     const TOKEN = "8671545811:AAH9lK8IUIL7zfq0LKtYqN8AZPn9pnLIwg8";
     const CHAT_ID = "616781226";
 
     document.getElementById('tgForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const btn = document.getElementById('submitBtn');
-        const name = document.getElementById('guest_name').value;
-        const status = document.getElementById('guest_status').value;
+        const nameVal = document.getElementById('name').value;
+        const statusVal = document.getElementById('status').value;
         
         btn.disabled = true;
         btn.innerText = "Відправка...";
+
+        const message = `🎉 Нова відповідь!\n👤 Ім'я: ${nameVal}\n✅ Статус: ${statusVal}`;
 
         fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 chat_id: CHAT_ID,
-                text: `🎉 Нова відповідь!\n👤 Ім'я: ${name}\n✅ Статус: ${status}`
+                text: message
             })
         })
         .then(res => {
             if(res.ok) {
                 alert('Дякуємо! Ваша відповідь надіслана.');
                 this.reset();
-            } else { alert('Помилка відправки. Перевірте бота.'); }
+            } else { 
+                alert('Помилка! Переконайтеся, що ви натиснули СТАРТ у боті @WeddingMakimDariaBot'); 
+            }
         })
         .catch(() => alert('Помилка мережі.'))
         .finally(() => {
@@ -267,4 +210,3 @@
     </script>
 </body>
 </html>
-
