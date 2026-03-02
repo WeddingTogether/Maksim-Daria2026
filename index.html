@@ -76,6 +76,13 @@
         .timer-num { font-size: 2.2rem; font-weight: 300; color: var(--accent-gold); display: block; }
         .timer-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; }
 
+        /* Дрес-код */
+        .swatches-container { display: flex; justify-content: center; flex-wrap: wrap; margin-top: 25px; gap: 12px; }
+        .swatch {
+            width: 55px; height: 55px; border-radius: 50%;
+            border: 3px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
         .loc-img { width: 100%; height: 230px; border-radius: 20px; background-size: cover; background-position: center; margin-bottom: 15px; background-color: #eee; }
         .map-btn { display: inline-block; padding: 12px 35px; border: 1.5px solid var(--accent-gold); color: var(--accent-gold); text-decoration: none; border-radius: 30px; font-size: 10px; letter-spacing: 2px; font-weight: 600; text-transform: uppercase; }
 
@@ -117,17 +124,30 @@
         </section>
 
         <section class="section">
+            <h3 style="font-family: 'Great Vibes'; font-size: 2.8rem; color: var(--accent-gold);">Дрес-код</h3>
+            <p style="padding: 0 15px;">Будемо вдячні за ваші наряди у таких кольорах:</p>
+            <div class="swatches-container">
+                <div class="swatch" style="background-color: #fce4ec;"></div> 
+                <div class="swatch" style="background-color: #e1bee7;"></div> 
+                <div class="swatch" style="background-color: #d4a5a5;"></div> 
+                <div class="swatch" style="background-color: #f5ebe0;"></div> 
+                <div class="swatch" style="background-color: #eeddcc;"></div> 
+                <div class="swatch" style="background-color: #fdf5e6;"></div> 
+            </div>
+        </section>
+
+        <section class="section">
             <div class="loc-card">
                 <h3>Офіційна частина</h3>
                 <div class="loc-img" style="background-image: url('zags.jpg');"></div>
                 <p><strong>Одеський ВРАЦС</strong><br>вул. Ришельєвська 4, Одеса<br><strong>Початок о 13:30</strong></p>
-                <a href="https://maps.google.com/?q=Ришельєвська+4+Одеса" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
+                <a href="http://googleusercontent.com/maps.google.com/9" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
             </div>
             <div class="loc-card" style="margin-top: 40px;">
                 <h3>Банкет</h3>
                 <div class="loc-img" style="background-image: url('restaurant.jpg');"></div>
                 <p><strong>Ресторан</strong><br>Ванний провулок 3, Одеса<br><strong>Початок о 16:00</strong></p>
-                <a href="https://maps.google.com/?q=Ванний+провулок+3+Одеса" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Ванний+провулок+3+Одеса0" class="map-btn" target="_blank">ВІДКРИТИ КАРТУ</a>
             </div>
         </section>
 
@@ -144,7 +164,7 @@
             </form>
         </section>
 
-        <p style="margin: 60px 0; font-size: 2rem; font-family: 'Great Vibes'; color: var(--accent-gold);">Чекаємо на вас з любовью💛</p>
+        <p style="margin: 60px 0; font-size: 2rem; font-family: 'Great Vibes'; color: var(--accent-gold);">Чекаємо на вас з любов'ю🩵</p>
     </div>
 
     <script>
@@ -153,9 +173,7 @@
         setTimeout(() => {
             document.getElementById('wrapper').classList.add('is-open-fade');
             document.body.classList.add('opened');
-            setTimeout(() => { 
-                document.getElementById('wrapper').style.display = 'none';
-            }, 1000);
+            setTimeout(() => { document.getElementById('wrapper').style.display = 'none'; }, 1000);
         }, 800);
     }
 
@@ -172,23 +190,19 @@
         btn.disabled = true;
         btn.innerText = "Відправка...";
 
-        const message = `🎉 Нова відповідь!\n👤 Ім'я: ${nameVal}\n✅ Статус: ${statusVal}`;
-
         fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 chat_id: CHAT_ID,
-                text: message
+                text: `🎉 Нова відповідь!\n👤 Ім'я: ${nameVal}\n✅ Статус: ${statusVal}`
             })
         })
         .then(res => {
             if(res.ok) {
                 alert('Дякуємо! Ваша відповідь надіслана.');
                 this.reset();
-            } else { 
-                alert('Помилка! Переконайтеся, що ви натиснули СТАРТ у боті @WeddingMakimDariaBot'); 
-            }
+            } else { alert('Помилка! Перевірте бота.'); }
         })
         .catch(() => alert('Помилка мережі.'))
         .finally(() => {
