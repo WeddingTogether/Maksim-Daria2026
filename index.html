@@ -177,32 +177,45 @@
         }, 800);
     }
 
-    // ТОЧНЫЙ ТОКЕН ИЗ СКРИНШОТА
+   // ДАНІ ПЕРЕВІРЕНІ
     const TOKEN = "8671545811:AAGs5WRoH5A4tT7fQsF-2B7fM3hJozL2jA";
-    const CHAT_ID = "7070209151";
+    const CHAT_ID = "7070209151"; 
 
-    document.getElementById('tgForm').addEventListener('submit', function(e) {
+    document.getElementById('tgForm').onsubmit = async function(e) {
         e.preventDefault();
         const btn = document.getElementById('submitBtn');
-        const nameVal = document.getElementById('name').value;
-        const statusVal = document.getElementById('status').value;
+        const name = document.getElementById('name').value;
+        const status = document.getElementById('status').value;
+        
         btn.disabled = true;
         btn.innerText = "Відправка...";
 
-        fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ chat_id: CHAT_ID, text: `🎉 Нова відповідь!\n👤 Ім'я: ${nameVal}\n✅ Статус: ${statusVal}` })
-        })
-        .then(res => {
-            if(res.ok) {
+        try {
+            const response = await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: `🎉 Нова відповідь!\n👤 Ім'я: ${name}\n✅ Статус: ${status}`
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.ok) {
                 alert('Дякуємо! Ваша відповідь надіслана.');
                 this.reset();
-            } else { alert('Помилка! Переконайтеся, що ви натиснули СТАРТ у боті @WeddingMakimDariaBot'); }
-        })
-        .catch(() => alert('Помилка мережі.'))
-        .finally(() => { btn.disabled = false; btn.innerText = "ВІДПРАВИТИ"; });
-    });
+            } else {
+                // Цей рядок покаже нам СПРАВЖНЮ причину помилки
+                alert('Помилка від Telegram: ' + result.description);
+            }
+        } catch (error) {
+            alert('Помилка мережі або блокування запиту.');
+        } finally {
+            btn.disabled = false;
+            btn.innerText = "ВІДПРАВИТИ";
+        }
+    };
 
     const weddingDate = new Date("Jun 06, 2026 13:30:00").getTime();
     setInterval(() => {
@@ -216,5 +229,6 @@
     </script>
 </body>
 </html>
+
 
 
